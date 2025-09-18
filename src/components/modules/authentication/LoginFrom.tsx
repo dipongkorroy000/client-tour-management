@@ -18,7 +18,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
     try {
       const res = await login(data as ILogin).unwrap();
 
-      if ((res).success) {
+      if (res.success) {
         toast.success("Logged in successfully");
         navigate("/");
       }
