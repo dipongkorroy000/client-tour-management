@@ -1,43 +1,51 @@
 import App from "@/App";
-import AdminLayout from "@/components/layout/AdminLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import About from "@/pages/About";
-import Analytics from "@/pages/Analytics";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import Bookings from "@/pages/user/Bookings";
 import Verify from "@/pages/verify";
+import generateRoutes from "@/utils/generateRoutes";
 import { createBrowserRouter } from "react-router";
+import adminSidebarItems from "./adminSidebarItems";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
     Component: App,
+    path: "/",
     children: [
       {
-        path: "/about",
         Component: About,
+        path: "/about",
       },
     ],
   },
   {
     path: "/admin",
-    Component: AdminLayout,
+    Component: DashboardLayout,
+    children: [...generateRoutes(adminSidebarItems)],
+  },
+  {
+    path: "/user",
+    Component: DashboardLayout,
     children: [
       {
-        path: "analytics",
-        Component: Analytics,
+        Component: Bookings,
+        path: "bookings",
       },
     ],
   },
+
   {
-    path: "/login",
     Component: Login,
+    path: "/login",
   },
   {
-    path: "/register",
     Component: Register,
+    path: "/register",
   },
   {
-    path: "/verify",
     Component: Verify,
+    path: "/verify",
   },
 ]);

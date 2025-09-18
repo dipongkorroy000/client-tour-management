@@ -18,8 +18,6 @@ export default function Navbar() {
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
 
-  console.log(data?.data);
-
   const handleLogout = async () => {
     await logout(undefined);
 
