@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 const registerSchema = z
   .object({
@@ -18,6 +20,9 @@ const registerSchema = z
   .refine((data) => data.password === data.confirmPassword, { message: "Passwords don't match", path: ["confirmPassword"] });
 
 export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+    const navigate = useNavigate();
+  const [register] = useRegisterMutation();
+
   const form = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -28,7 +33,17 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
     },
   });
 
-  const onSubmit = (data: z.infer<typeof registerSchema>) => {
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const userInfo = { name: data.name, email: data.email, password: data.password };
+    try {
+      const result = await register(userInfo).unwrap();
+      console.log(result);
+
+      toast.success("User created successfully");
+      navigate("/verify")
+    } catch (error) {
+      console.log(error);
+    }
     console.log(data);
   };
 
@@ -103,7 +118,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button className="w-full" type="submit">Submit</Button>
           </form>
         </Form>
 
