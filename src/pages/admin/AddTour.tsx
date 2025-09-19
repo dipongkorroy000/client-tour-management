@@ -63,12 +63,7 @@ export default function AddTour() {
       endDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days later
       departureLocation: "Dhaka",
       arrivalLocation: "Cox's Bazar",
-      included: [
-        { value: "Accommodation for 2 nights" },
-        { value: "All meals (breakfast, lunch, dinner)" },
-        { value: "Transportation (AC bus)" },
-        { value: "Professional tour guide" },
-      ],
+      included: [{ value: "All meals (breakfast, lunch, dinner)" }, { value: "Transportation (AC bus)" }, { value: "Professional tour guide" }],
       excluded: [{ value: "Personal expenses" }, { value: "Extra activities not mentioned" }, { value: "Travel insurance" }],
       amenities: [{ value: "Air-conditioned rooms" }, { value: "Free WiFi" }, { value: "Swimming pool access" }, { value: "Beach access" }],
       tourPlan: [
@@ -107,10 +102,12 @@ export default function AddTour() {
       tourPlan: data.tourPlan[0].value === "" ? [] : data.tourPlan.map((item: { value: string }) => item.value),
     };
 
+    console.log(tourData);
+
     const formData = new FormData();
 
     images.forEach((image) => formData.append("files", image as File));
-    //   console.log(formData.getAll("files"));
+    // console.log(formData.getAll("files"));
 
     formData.append("data", JSON.stringify(tourData));
 
@@ -232,7 +229,6 @@ export default function AddTour() {
                           ))}
                         </SelectContent>
                       </Select>
-
                       <FormMessage />
                     </FormItem>
                   )}
@@ -386,6 +382,7 @@ export default function AddTour() {
                     <Plus />
                   </Button>
                 </div>
+
                 <div className="space-y-4 mt-4">
                   {includedFields.map((item, index) => (
                     <div className="flex gap-2" key={item.id}>
