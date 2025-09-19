@@ -9,6 +9,7 @@ export const divisionApi = baseApi.injectEndpoints({
     getDivisions: builder.query({
       query: () => ({ url: "/division", method: "GET" }),
       providesTags: ["DIVISION"],
+      transformResponse: (response) => response.data,
     }),
   }),
 });
