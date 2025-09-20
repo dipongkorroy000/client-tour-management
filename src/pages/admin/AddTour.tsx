@@ -102,8 +102,6 @@ export default function AddTour() {
       tourPlan: data.tourPlan[0].value === "" ? [] : data.tourPlan.map((item: { value: string }) => item.value),
     };
 
-    console.log(tourData);
-
     const formData = new FormData();
 
     images.forEach((image) => formData.append("files", image as File));
@@ -116,7 +114,6 @@ export default function AddTour() {
       if (res.success) {
         toast.success("Add Tour", { id: toastId });
       }
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

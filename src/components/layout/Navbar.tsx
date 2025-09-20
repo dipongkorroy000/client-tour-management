@@ -11,6 +11,7 @@ import { role } from "@/constants/role";
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC" },
+  { href: "/tours", label: "Tours", role: "PUBLIC" },
   { href: "/about", label: "About", role: "PUBLIC" },
   { href: "/admin", label: "Dashboard", role: role.admin },
   { href: "/super-admin", label: "Dashboard", role: role.superAdmin },
@@ -29,7 +30,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b">
+    <header className="border-b sticky top-0 z-50 bg-secondary">
       <div className="container mx-auto px-4 flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">

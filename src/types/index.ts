@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 export type { ISendOTP, ILogin, IVerifyOTP } from "./auth.type";
+export type { ITourPackage } from "./tour.type";
 
 export interface IResponse<T> {
   statusCode: number;
