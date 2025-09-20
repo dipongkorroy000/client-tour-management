@@ -29,13 +29,11 @@ const Booking = () => {
       // --------
     }
     try {
-        const res = await createBooking(bookingData).unwrap();
-        
-        if (res.success) {
-            window.open(res.data.paymentUrl)
-        }
+      const res = await createBooking(bookingData).unwrap();
 
-      console.log(res);
+      if (res.success) {
+        window.open(res.data.paymentUrl);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -11,7 +11,12 @@ export const divisionApi = baseApi.injectEndpoints({
       providesTags: ["DIVISION"],
       transformResponse: (response) => response.data,
     }),
+    getDivision: builder.query({
+      query: ({ _id }) => ({ url: `/division/${_id}`, method: "GET" }),
+      providesTags: ["DIVISION"],
+      transformResponse: (response) => response.data.name,
+    }),
   }),
 });
 
-export const { useAddDivisionMutation, useGetDivisionsQuery } = divisionApi;
+export const { useAddDivisionMutation, useGetDivisionsQuery, useGetDivisionQuery } = divisionApi;

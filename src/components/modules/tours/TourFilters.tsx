@@ -12,7 +12,7 @@ const TourFilters = () => {
   const selectedTourType = searchParams.get("tourType") || undefined;
 
   const { data: divisions, isLoading: divisionsLoading } = useGetDivisionsQuery(undefined);
-  const { data: tourTypes, isLoading: tourTypesLoading } = useGetTourTypesQuery(undefined);
+  const { data: tourTypes, isLoading: tourTypesLoading } = useGetTourTypesQuery({ fields: "_id, name " });
 
   const divisionOptions = divisions?.map((item: { _id: string; name: string }) => ({ label: item.name, value: item._id }));
   const tourTypeOptions = tourTypes?.data.map((item: { _id: string; name: string }) => ({ label: item.name, value: item._id }));

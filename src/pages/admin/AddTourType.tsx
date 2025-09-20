@@ -5,9 +5,14 @@ import DeleteConfirmation from "@/components/DeleteConfirmation";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { useState } from "react";
 
 const AddTourType = () => {
-  const { data } = useGetTourTypesQuery(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  const { data, isLoading } = useGetTourTypesQuery({ page: currentPage, limit });
   const [removeTourType] = useRemoveTourTypeMutation();
 
   const handleRemoveTourType = async (tourTypeId: string) => {
@@ -19,6 +24,12 @@ const AddTourType = () => {
       console.error(error);
     }
   };
+
+  // console.log(Array.from({ length: 5 }, (_, index) => index + 1));
+
+  const totalPage = data?.meta.totalPage;
+
+  if (isLoading) return <h2 className="text-center my-10">Loading...</h2>;
 
   return (
     <div className="w-full max-w-7xl mx-auto px-5">
@@ -50,6 +61,34 @@ const AddTourType = () => {
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex justify-end mt-5">
+        {totalPage > 1 && (
+          <div>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => setCurrentPage((prev) => prev - 1)}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                  <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
+                    <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => setCurrentPage((prev) => prev + 1)}
+                    className={currentPage === totalPage ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </div>
   );
